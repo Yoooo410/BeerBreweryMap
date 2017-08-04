@@ -27,15 +27,16 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     var beerSocialMedia: String = ""
     var beerLogoImage: String = ""
     var beerDetail: String = ""
-
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
         beerTableView.delegate = self
         beerTableView.dataSource = self
         setupSearchBar()
+        
         
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager = CLLocationManager()
@@ -55,45 +56,61 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             self.myBeers = beers
             for beer in self.myBeers {
                 self.fetchLatLon(for: beer.address!, completion: { (location) in
-                    self.addAnnotation(coord: location)
+                    self.addAnnotation(coord: location, beer: beer)
+                    
                     beer.latitude = location.coordinate.latitude
                     beer.longitude = location.coordinate.longitude
                     let beerLocation = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
-                    let currentLocation = CLLocation(latitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!)
                     
+                    let currentLocation = CLLocation(latitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!)
+                        
                     let distanceMeter = beerLocation.distance(from: currentLocation) * 10
                     beer.distance = round(distanceMeter / 1000) / 10
+                    self.beerTableView.reloadData()
                 })
+                
             }
-            
             searchResult = myBeers
         } catch {
             print("Fetching Failed")
         }
     }
     
+    // right before locating User on the mapview
+    func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
+        
+        if locationManager.location != nil {
+            let lat = locationManager.location?.coordinate.latitude
+            let lon = locationManager.location?.coordinate.longitude
+            
+            let center = CLLocationCoordinate2D(latitude:lat!, longitude: lon!)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+            
+            mapView.showsUserLocation = true
+            mapView.showsCompass = true
+            mapView.showsScale = true
+            mapView.showsTraffic = true
+            self.mapView.setRegion(region, animated: true)
+
+        }
+    }
     
     // set the present user's Location and the region
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.first!
-         
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
         
-        mapView.showsUserLocation = true
-        self.mapView.setRegion(region, animated: true)
     }
 
     
     // add the annotation to the map view
-    func addAnnotation(coord: CLLocation){
-        let CLLCoordType = CLLocationCoordinate2D(latitude: coord.coordinate.latitude,
-                                                  longitude: coord.coordinate.longitude)
-        let anno = MKPointAnnotation();
-        anno.coordinate = CLLCoordType;
-        mapView.addAnnotation(anno);
+    func addAnnotation(coord: CLLocation, beer: Beer){
+        let coord = CLLocationCoordinate2D(latitude: coord.coordinate.latitude,
+                                           longitude: coord.coordinate.longitude)
+        let anno = MKPointAnnotation()
+        anno.coordinate = coord
+        anno.title = beer.name
+        anno.subtitle = beer.address
+        self.mapView.addAnnotation(anno)
     }
-    
     
     // change the address to latitude and longtitude, and stock the array of [CLLocation]
     func fetchLatLon (for address: String, completion: @escaping (CLLocation) -> Void) {
@@ -110,24 +127,32 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         }
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("selected")
+        
+    }
     
     // set the pin of each beer object's address to mapView
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil;
-        } else {
-            let pinIdent = "Pin";
-            var pinView: MKPinAnnotationView;
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation, beer: Beer) -> MKAnnotationView? {
+
+        if annotation is MKUserLocation { return nil }
+        let pinIdent = "Pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView
+    
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent)
             
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView {
-                dequeuedView.annotation = annotation;
-                pinView = dequeuedView;
-                
-            } else{
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent);
-            }
-            return pinView;
+//            let rightImageView = UIImageView(image: UIImage(named: beer.logoImage!))
+//            rightImageView.frame = CGRect(x: 0, y: 0, width: 2, height: 2)
+//            rightImageView.contentMode = .scaleAspectFit
+//            pinView?.rightCalloutAccessoryView = rightImageView
+            pinView?.canShowCallout = true
+        } else {
+            pinView?.annotation = annotation
         }
+//        pinView?.image = UIImageView(image: UIImage(named: beer.logoImage!))
+    
+        return pinView
     }
 }
 

@@ -22,9 +22,14 @@ class BeerDetailViewController: UIViewController {
     @IBOutlet weak var beerPlaceName: UILabel!
     @IBOutlet weak var beerPlaceAddress: UILabel!
     @IBOutlet weak var beerPlacePhoneNumber: UILabel!
-    @IBOutlet weak var beerPlaceWebsite: UILabel!
-    @IBOutlet weak var beerPlaceSocialMedia: UILabel!
-    @IBOutlet weak var beerPlaceDetail: UILabel!
+    @IBOutlet weak var beerPlaceSocialMedia: UITextView!
+    @IBOutlet weak var beerPlaceWebsite: UITextView!
+    
+    @IBOutlet weak var beerPlaceDetail: UITextView!
+    
+//    @IBOutlet weak var beerPlaceWebsite: UILabel!
+//    @IBOutlet weak var beerPlaceSocialMedia: UILabel!
+//    @IBOutlet weak var beerPlaceDetail: UILabel!
     
     
     override func viewDidLoad() {

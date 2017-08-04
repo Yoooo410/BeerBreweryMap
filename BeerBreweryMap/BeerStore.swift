@@ -193,7 +193,7 @@ struct BeerStore {
         let brewery16 = Beer(context: viewContext)
         brewery16.id = 16
         brewery16.name = "Coal Harbour Brewing Company"
-        brewery16.address = "1967 Triumph St, Vancouver "
+        brewery16.address = "1967 Triumph St, Vancouver"
         brewery16.phoneNumber = "604-215-7471"
         brewery16.website = "coalharbourbrewing.com"
         brewery16.socialMedia = "facebook.com/CoalHarbourBrewing"
@@ -208,7 +208,7 @@ struct BeerStore {
         let brewery17 = Beer(context: viewContext)
         brewery17.id = 17
         brewery17.name = "Dageraad Brewing"
-        brewery17.address = "114 – 3191 Thunderbird Cr, Burnaby"
+        brewery17.address = "3191 Thunderbird Crescent #114, Burnaby"
         brewery17.phoneNumber = "604-420-2050"
         brewery17.website = "dageraadbrewing.com"
         brewery17.socialMedia = "facebook.com/DageraadBrewing"
@@ -636,7 +636,7 @@ struct BeerStore {
         brewery47.id = 47
         brewery47.name = "Russell Brewing Company"
         brewery47.address = "#202 13018 80th Ave, Surrey"
-        brewery47.phoneNumber = ": 604-599-1190"
+        brewery47.phoneNumber = "604-599-1190"
         brewery47.website = "russellbeer.com"
         brewery47.socialMedia = "facebook.com/Russell.Brewing"
         brewery47.logoImage = "RussellBrewingCompany"
