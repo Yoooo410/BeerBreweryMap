@@ -129,7 +129,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("selected")
-        
     }
     
     // set the pin of each beer object's address to mapView
@@ -157,7 +156,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 }
 
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+
+extension ViewController: UISearchBarDelegate {
     
     // set the search bar on the Navigation bar
     func setupSearchBar() {
@@ -199,7 +199,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UISearchBa
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
     }
-    
+}
+
+
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // set the number of the cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -258,5 +262,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UISearchBa
             beerDetailVC.beerLogoImage = beerLogoImage
             beerDetailVC.beerDetail = beerDetail
         }
+    }
+}
+
+
+
+extension ViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return myBeers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as UICollectionViewCell
+        
+        return cell
     }
 }

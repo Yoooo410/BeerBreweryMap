@@ -24,16 +24,14 @@ class BeerDetailViewController: UIViewController {
     @IBOutlet weak var beerPlacePhoneNumber: UILabel!
     @IBOutlet weak var beerPlaceSocialMedia: UITextView!
     @IBOutlet weak var beerPlaceWebsite: UITextView!
-    
     @IBOutlet weak var beerPlaceDetail: UITextView!
     
-//    @IBOutlet weak var beerPlaceWebsite: UILabel!
-//    @IBOutlet weak var beerPlaceSocialMedia: UILabel!
-//    @IBOutlet weak var beerPlaceDetail: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "detailBackgroundPhoto")!)
         
         beerPlaceName.text = beerName
         beerPlaceAddress.text = beerAddress
