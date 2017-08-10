@@ -68,7 +68,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                     beer.distance = round(distanceMeter / 1000) / 10
                     self.beerTableView.reloadData()
                 })
-                
             }
             searchResult = myBeers
         } catch {
@@ -91,7 +90,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             mapView.showsScale = true
             mapView.showsTraffic = true
             self.mapView.setRegion(region, animated: true)
-
         }
     }
     
@@ -112,6 +110,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         self.mapView.addAnnotation(anno)
     }
     
+    
     // change the address to latitude and longtitude, and stock the array of [CLLocation]
     func fetchLatLon (for address: String, completion: @escaping (CLLocation) -> Void) {
         
@@ -127,9 +126,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         }
     }
     
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("selected")
     }
+    
     
     // set the pin of each beer object's address to mapView
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation, beer: Beer) -> MKAnnotationView? {
@@ -140,17 +141,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent)
-            
-//            let rightImageView = UIImageView(image: UIImage(named: beer.logoImage!))
-//            rightImageView.frame = CGRect(x: 0, y: 0, width: 2, height: 2)
-//            rightImageView.contentMode = .scaleAspectFit
-//            pinView?.rightCalloutAccessoryView = rightImageView
-            pinView?.canShowCallout = true
         } else {
             pinView?.annotation = annotation
         }
-//        pinView?.image = UIImageView(image: UIImage(named: beer.logoImage!))
-    
         return pinView
     }
 }
@@ -194,7 +187,6 @@ extension ViewController: UISearchBarDelegate {
         // reload the BeerPlaceTableView
         beerTableView.reloadData()
     }
-    
     // close the keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
@@ -218,7 +210,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    // set the information in the table view after searching
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let beer = searchResult[indexPath.row]
         let cell = cell as! BeerPlaceTableViewCell
@@ -232,8 +224,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.beerPlaceName.text = beer.name!
         cell.beerPlaceAddress.text = beer.address!
         cell.destance.text = String(beer.distance)
-        
     }
+    
     
     // pass the data of these properties to detail page when select the cell of the BeerPlaceTableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -262,20 +254,5 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             beerDetailVC.beerLogoImage = beerLogoImage
             beerDetailVC.beerDetail = beerDetail
         }
-    }
-}
-
-
-
-extension ViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myBeers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as UICollectionViewCell
-        
-        return cell
     }
 }

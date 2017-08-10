@@ -69,7 +69,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DIG-aW-sHM">
-                                                    <rect key="frame" x="8" y="1" width="67" height="64"/>
+                                                    <rect key="frame" x="2" y="1" width="67" height="64"/>
                                                     <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="67" id="3qD-sj-JJz"/>
@@ -78,7 +78,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="DIG-aW-sHM" firstAttribute="top" secondItem="Bo8-mm-dge" secondAttribute="topMargin" constant="-7" id="1Ut-B4-e34"/>
-                                                <constraint firstItem="JAB-io-yA7" firstAttribute="leading" secondItem="DIG-aW-sHM" secondAttribute="trailing" constant="8" id="1VU-yw-hg8"/>
+                                                <constraint firstItem="JAB-io-yA7" firstAttribute="leading" secondItem="DIG-aW-sHM" secondAttribute="trailing" constant="14" id="1VU-yw-hg8"/>
                                                 <constraint firstItem="rEJ-NC-6io" firstAttribute="trailing" secondItem="eFx-gL-5Mk" secondAttribute="trailing" constant="18" id="6Hl-Oa-rRU"/>
                                                 <constraint firstItem="vMU-j9-yCB" firstAttribute="top" secondItem="JAB-io-yA7" secondAttribute="bottom" constant="-4.5" id="CUK-rJ-Ghn"/>
                                                 <constraint firstItem="JAB-io-yA7" firstAttribute="leading" secondItem="vMU-j9-yCB" secondAttribute="leading" id="GMz-0s-LlR"/>
@@ -89,7 +89,7 @@
                                                 <constraint firstItem="JAB-io-yA7" firstAttribute="top" secondItem="Bo8-mm-dge" secondAttribute="top" id="W0n-G8-gtT"/>
                                                 <constraint firstItem="DIG-aW-sHM" firstAttribute="centerY" secondItem="Bo8-mm-dge" secondAttribute="centerY" id="Wjc-ZV-FFI"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="JAB-io-yA7" secondAttribute="trailing" id="ava-P3-C7L"/>
-                                                <constraint firstItem="DIG-aW-sHM" firstAttribute="leading" secondItem="Bo8-mm-dge" secondAttribute="leadingMargin" id="cHp-nl-Heu"/>
+                                                <constraint firstItem="DIG-aW-sHM" firstAttribute="leading" secondItem="Bo8-mm-dge" secondAttribute="leadingMargin" constant="-6" id="cHp-nl-Heu"/>
                                                 <constraint firstItem="eFx-gL-5Mk" firstAttribute="top" secondItem="Bo8-mm-dge" secondAttribute="topMargin" constant="29" id="kA0-Hr-Qzd"/>
                                                 <constraint firstItem="JAB-io-yA7" firstAttribute="trailing" secondItem="vMU-j9-yCB" secondAttribute="trailing" constant="43" id="rTp-Ya-LXA"/>
                                                 <constraint firstItem="eFx-gL-5Mk" firstAttribute="trailing" secondItem="Bo8-mm-dge" secondAttribute="trailingMargin" id="yaO-gx-Un1"/>
@@ -142,35 +142,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aR4-aY-9DA">
-                                <rect key="frame" x="101" y="78" width="172" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Detail"/>
-                                    <segment title="BeerRally"/>
-                                </segments>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="beerPlaceAddress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnb-4y-fVc">
-                                <rect key="frame" x="37" y="298" width="300" height="25"/>
+                                <rect key="frame" x="37" y="269" width="300" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="beerPlacePhoneNumber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygJ-Gk-OD3">
-                                <rect key="frame" x="37" y="325" width="300" height="25"/>
+                                <rect key="frame" x="37" y="310" width="300" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="inA-9q-DPl">
-                                <rect key="frame" x="130" y="175" width="115" height="115"/>
+                                <rect key="frame" x="130" y="133" width="115" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" indicatorStyle="black" bouncesZoom="NO" editable="NO" text="beerPlaceWebsite" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UkS-uT-bWY" userLabel="Beer Place Website">
-                                <rect key="frame" x="37" y="352" width="300" height="25"/>
+                                <rect key="frame" x="37" y="343" width="300" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -179,7 +170,7 @@
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" text="beerPlaceSocialMedia" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rVw-yC-pSa" userLabel="Beer Place SocialMedia">
-                                <rect key="frame" x="37" y="378" width="300" height="25"/>
+                                <rect key="frame" x="37" y="376" width="300" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -188,15 +179,35 @@
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-fO-hxC" userLabel="Beer Place Detail">
-                                <rect key="frame" x="30" y="417" width="314" height="224"/>
+                                <rect key="frame" x="30" y="409" width="314" height="232"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHx-Iu-3sA">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="gp9-c1-hdd">
+                                        <nil key="title"/>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="aR4-aY-9DA">
+                                            <rect key="frame" x="102" y="8" width="172" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Detail"/>
+                                                <segment title="BeerRally"/>
+                                            </segments>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="changeSeg:" destination="wkK-oC-SEu" eventType="valueChanged" id="JdD-Pv-Abs"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="beerPlaceName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFI-di-7A7">
-                                <rect key="frame" x="37" y="133" width="300" height="21"/>
+                                <rect key="frame" x="37" y="87" width="300" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -204,6 +215,11 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fHx-Iu-3sA" firstAttribute="leading" secondItem="eGf-Jg-prf" secondAttribute="leading" id="2tD-Yy-SXj"/>
+                            <constraint firstAttribute="trailing" secondItem="fHx-Iu-3sA" secondAttribute="trailing" id="Yw4-XG-shf"/>
+                            <constraint firstItem="fHx-Iu-3sA" firstAttribute="top" secondItem="eGf-Jg-prf" secondAttribute="top" constant="20" id="kqN-pW-nxj"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="beerPlaceAddress" destination="vnb-4y-fVc" id="KXj-5O-i05"/>
@@ -213,9 +229,60 @@
                         <outlet property="beerPlacePhoneNumber" destination="ygJ-Gk-OD3" id="H7h-4r-d5s"/>
                         <outlet property="beerPlaceSocialMedia" destination="rVw-yC-pSa" id="W3S-ud-2ug"/>
                         <outlet property="beerPlaceWebsite" destination="UkS-uT-bWY" id="WQC-p7-Crf"/>
+                        <outlet property="beerRallyCollectionView" destination="tVv-sG-XJ1" id="GAe-rX-XqC"/>
+                        <outlet property="beerRallyView" destination="Qwx-yZ-OOl" id="U40-yE-hgC"/>
+                        <outlet property="segDetailAndBeerRally" destination="aR4-aY-9DA" id="qVt-3f-g37"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fs6-dg-seR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Qwx-yZ-OOl">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tVv-sG-XJ1">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HGN-BY-V7M">
+                                <size key="itemSize" width="125" height="142"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <cells>
+                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="beerPlaceLogoImage" id="wDW-Cy-ar9" customClass="BeerRallyCellCollectionViewCell" customModule="BeerBreweryMap" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="142"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="142"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fEz-IL-4JO">
+                                                <rect key="frame" x="12" y="11" width="100" height="100"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1v-a0-Hga">
+                                                <rect key="frame" x="0.0" y="121" width="125" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </view>
+                                    <connections>
+                                        <outlet property="beerPlaceLogoImage" destination="fEz-IL-4JO" id="1hX-LX-h8G"/>
+                                        <outlet property="beerPlaceName" destination="s1v-a0-Hga" id="Izw-lz-0G2"/>
+                                    </connections>
+                                </collectionViewCell>
+                            </cells>
+                            <connections>
+                                <outlet property="delegate" destination="wkK-oC-SEu" id="WN1-gX-wvH"/>
+                            </connections>
+                        </collectionView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1999.2" y="129.08545727136433"/>
         </scene>
@@ -230,49 +297,6 @@
                     <view key="view" contentMode="scaleToFill" id="Z09-FD-Gcr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tVv-sG-XJ1">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HGN-BY-V7M">
-                                    <size key="itemSize" width="125" height="122"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="beerPlaceLogoImage" id="wDW-Cy-ar9" customClass="BeerRallyCellCollectionViewCell" customModule="BeerBreweryMap" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="125" height="122"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="122"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fEz-IL-4JO">
-                                                    <rect key="frame" x="12" y="2" width="100" height="100"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1v-a0-Hga">
-                                                    <rect key="frame" x="0.0" y="101" width="125" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </view>
-                                        <connections>
-                                            <outlet property="beerPlaceLogoImage" destination="fEz-IL-4JO" id="1hX-LX-h8G"/>
-                                            <outlet property="beerPlaceName" destination="s1v-a0-Hga" id="Izw-lz-0G2"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="delegate" destination="ebU-2V-8Fn" id="Gav-1d-pgd"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
