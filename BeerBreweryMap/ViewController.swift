@@ -246,6 +246,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if (segue.identifier == "showBeerDetail") {
             let beerDetailVC: BeerDetailViewController = (segue.destination as? BeerDetailViewController)!
 
+            beerDetailVC.myBeers = myBeers
             beerDetailVC.beerName = beerName
             beerDetailVC.beerAddress = beerAddress
             beerDetailVC.beerPhoneNumber = beerPhoneNumber

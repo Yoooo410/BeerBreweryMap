@@ -239,11 +239,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tVv-sG-XJ1">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tVv-sG-XJ1">
+                            <rect key="frame" x="0.0" y="60" width="375" height="543"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HGN-BY-V7M">
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="3" id="HGN-BY-V7M">
                                 <size key="itemSize" width="125" height="142"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -257,19 +256,26 @@
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="142"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fEz-IL-4JO">
-                                                <rect key="frame" x="12" y="11" width="100" height="100"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1v-a0-Hga">
-                                                <rect key="frame" x="0.0" y="121" width="125" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1v-a0-Hga">
+                                                <rect key="frame" x="0.0" y="129" width="125" height="13"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fEz-IL-4JO">
+                                                <rect key="frame" x="12" y="11" width="100" height="108"/>
+                                            </imageView>
                                         </subviews>
                                     </view>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="s1v-a0-Hga" secondAttribute="trailing" id="EGs-PL-6AP"/>
+                                        <constraint firstItem="s1v-a0-Hga" firstAttribute="leading" secondItem="wDW-Cy-ar9" secondAttribute="leading" id="JvR-gu-cvq"/>
+                                        <constraint firstItem="s1v-a0-Hga" firstAttribute="top" secondItem="fEz-IL-4JO" secondAttribute="bottom" constant="10" id="RkX-rK-LEN"/>
+                                        <constraint firstItem="fEz-IL-4JO" firstAttribute="top" secondItem="wDW-Cy-ar9" secondAttribute="topMargin" constant="3" id="X2u-n2-lPg"/>
+                                        <constraint firstAttribute="bottom" secondItem="s1v-a0-Hga" secondAttribute="bottom" id="ksc-w4-vd6"/>
+                                        <constraint firstItem="fEz-IL-4JO" firstAttribute="leading" secondItem="wDW-Cy-ar9" secondAttribute="leadingMargin" constant="4" id="pzf-DH-g49"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fEz-IL-4JO" secondAttribute="trailing" constant="5" id="xkq-d8-7sC"/>
+                                    </constraints>
                                     <connections>
                                         <outlet property="beerPlaceLogoImage" destination="fEz-IL-4JO" id="1hX-LX-h8G"/>
                                         <outlet property="beerPlaceName" destination="s1v-a0-Hga" id="Izw-lz-0G2"/>
@@ -277,11 +283,18 @@
                                 </collectionViewCell>
                             </cells>
                             <connections>
+                                <outlet property="dataSource" destination="wkK-oC-SEu" id="G40-A8-4IU"/>
                                 <outlet property="delegate" destination="wkK-oC-SEu" id="WN1-gX-wvH"/>
                             </connections>
                         </collectionView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="tVv-sG-XJ1" firstAttribute="leading" secondItem="Qwx-yZ-OOl" secondAttribute="leading" id="Q0U-jX-DkS"/>
+                        <constraint firstAttribute="bottom" secondItem="tVv-sG-XJ1" secondAttribute="bottom" id="arp-mM-VlN"/>
+                        <constraint firstItem="tVv-sG-XJ1" firstAttribute="top" secondItem="Qwx-yZ-OOl" secondAttribute="top" constant="60" id="kuw-s4-8Xl"/>
+                        <constraint firstAttribute="trailing" secondItem="tVv-sG-XJ1" secondAttribute="trailing" id="yEA-OY-Cdw"/>
+                    </constraints>
                 </view>
             </objects>
             <point key="canvasLocation" x="1999.2" y="129.08545727136433"/>

@@ -27,5 +27,6 @@ class CardView: UIView {
         layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
         layer.shadowOpacity = shadowOpacity
         layer.shadowPath = shadowPath.cgPath
+        layer.cornerRadius = 40
     }
 }

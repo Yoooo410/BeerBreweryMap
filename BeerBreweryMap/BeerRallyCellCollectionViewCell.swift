@@ -12,4 +12,5 @@ class BeerRallyCellCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var beerPlaceLogoImage: UIImageView!
     @IBOutlet weak var beerPlaceName: UILabel!
+    
 }

@@ -37,9 +37,13 @@ class BeerDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "detailBackgroundPhoto")!)
         self.navigationController?.navigationBar.addSubview(segDetailAndBeerRally)
-        showView()
+        
+        
+        beerRallyView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: view.frame.width, height: view.frame.height))
         
         beerRallyCollectionView.dataSource = self
+        beerRallyCollectionView.delegate = self
+        
         beerPlaceName.text = beerName
         beerPlaceAddress.text = beerAddress
         beerPlacePhoneNumber.text = beerPhoneNumber
@@ -61,6 +65,7 @@ class BeerDetailViewController: UIViewController {
         }
     }
     
+    // show the beerRallyView
     private func showView() {
         UIView.animate(withDuration: 0.5, animations: {[weak self] () -> Void in
             if let weakSelf = self {
@@ -75,6 +80,7 @@ class BeerDetailViewController: UIViewController {
         })
     }
 
+    // hide the beerRallyView
     private func hideView() {
         beerRallyView.center = self.view.center
         self.view.addSubview(beerRallyView)
@@ -82,14 +88,14 @@ class BeerDetailViewController: UIViewController {
             
             if let weakSelf = self {
                 weakSelf.beerRallyView.alpha = 1
-                weakSelf.beerRallyView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5);
+                weakSelf.beerRallyView.transform = CGAffineTransform(scaleX: 1, y: 1);
             }
         })
     }
 }
 
 
-extension BeerDetailViewController: UICollectionViewDataSource {
+extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return myBeers.count
@@ -104,9 +110,15 @@ extension BeerDetailViewController: UICollectionViewDataSource {
         } else {
             cell.beerPlaceLogoImage.image = UIImage(named: "YellowDogBrewingCo")
         }
-        
-        cell.beerPlaceName.text = beerName
-        
+        cell.beerPlaceName.text = beer.name
         return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+        let width = self.view.frame.size.width / 3 - 2
+        let height = self.view.frame.size.width / 3 - 2
+        return CGSize(width: width, height: height)
     }
 }
