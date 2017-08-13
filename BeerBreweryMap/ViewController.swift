@@ -15,6 +15,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var beerTableView: UITableView!
+    
     var searchBar: UISearchBar!
     var myBeers = [Beer]()
     var searchResult = [Beer]()
@@ -27,7 +28,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     var beerSocialMedia: String = ""
     var beerLogoImage: String = ""
     var beerDetail: String = ""
-    
+    let shadowOffsetWidth: Int = 1
+    let shadowOffsetHeight: Int = 2
+    let shadowColor: UIColor? = UIColor.black
+    let shadowOpacity: Float = 0.5
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,6 +225,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.beerImageView.image = UIImage(named: "YellowDogBrewingCo")
         }
+        cell.layer.masksToBounds = false
+        cell.layer.shadowColor = shadowColor?.cgColor
+        cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
+        cell.layer.shadowOpacity = shadowOpacity
         cell.accessoryType = .disclosureIndicator
         cell.beerPlaceName.text = beer.name!
         cell.beerPlaceAddress.text = beer.address!

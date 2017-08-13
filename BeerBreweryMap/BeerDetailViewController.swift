@@ -30,6 +30,10 @@ class BeerDetailViewController: UIViewController {
     var beerDetail: String!
     var myBeers = [Beer]()
     var isShowView = false
+    let shadowOffsetWidth: Int = 0
+    let shadowOffsetHeight: Int = 5
+    let shadowColor: UIColor? = UIColor.black
+    let shadowOpacity: Float = 0.5
     
     
     override func viewDidLoad() {
@@ -85,7 +89,6 @@ class BeerDetailViewController: UIViewController {
         beerRallyView.center = self.view.center
         self.view.addSubview(beerRallyView)
         UIView.animate(withDuration: 0.5, animations: {[weak self] () -> Void in
-            
             if let weakSelf = self {
                 weakSelf.beerRallyView.alpha = 1
                 weakSelf.beerRallyView.transform = CGAffineTransform(scaleX: 1, y: 1);
@@ -95,7 +98,7 @@ class BeerDetailViewController: UIViewController {
 }
 
 
-extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return myBeers.count
@@ -107,18 +110,26 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let beer = myBeers[indexPath.row]
         if let imageName = beer.logoImage {
             cell.beerPlaceLogoImage.image = UIImage(named: imageName)
+            cell.layer.masksToBounds = false
+            cell.layer.shadowColor = shadowColor?.cgColor
+            cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
+            cell.layer.shadowOpacity = shadowOpacity
         } else {
             cell.beerPlaceLogoImage.image = UIImage(named: "YellowDogBrewingCo")
         }
         cell.beerPlaceName.text = beer.name
+        
         return cell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
         let width = self.view.frame.size.width / 3 - 2
         let height = self.view.frame.size.width / 3 - 2
         return CGSize(width: width, height: height)
     }
+    
+    func tap(_ gestureRecognizer: UITapGestureRecognizer) {
+        beerPlaceLogoImage.alpha = 0.5
+    }
+    
 }
