@@ -10,7 +10,7 @@ import UIKit
 
 class BeerRallyCellCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var beerPlaceLogoImage: UIImageView!
+    @IBOutlet weak var beerPlaceImage: UIImageView!
     @IBOutlet weak var beerPlaceName: UILabel!
     
 }

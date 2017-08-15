@@ -178,7 +178,7 @@
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-fO-hxC" userLabel="Beer Place Detail">
                                 <rect key="frame" x="30" y="411.5" width="314" height="229.5"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -189,7 +189,7 @@
                                     <navigationItem id="gp9-c1-hdd">
                                         <nil key="title"/>
                                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="aR4-aY-9DA">
-                                            <rect key="frame" x="102" y="8" width="172" height="29"/>
+                                            <rect key="frame" x="101.5" y="7.5" width="172" height="29"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
                                                 <segment title="Detail"/>
@@ -247,7 +247,7 @@
                     <connections>
                         <outlet property="beerPlaceAddress" destination="vnb-4y-fVc" id="KXj-5O-i05"/>
                         <outlet property="beerPlaceDetail" destination="6o9-fO-hxC" id="pzL-aC-9Gc"/>
-                        <outlet property="beerPlaceLogoImage" destination="fEz-IL-4JO" id="9BH-KX-yHh"/>
+                        <outlet property="beerPlaceLogoImage" destination="inA-9q-DPl" id="738-fY-rAC"/>
                         <outlet property="beerPlaceName" destination="oFI-di-7A7" id="D8R-nx-858"/>
                         <outlet property="beerPlacePhoneNumber" destination="ygJ-Gk-OD3" id="H7h-4r-d5s"/>
                         <outlet property="beerPlaceSocialMedia" destination="rVw-yC-pSa" id="W3S-ud-2ug"/>
@@ -289,7 +289,7 @@
                                                 <rect key="frame" x="12" y="11" width="100" height="108"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="40"/>
+                                                        <integer key="value" value="50"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
@@ -305,8 +305,8 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="fEz-IL-4JO" secondAttribute="trailing" constant="5" id="xkq-d8-7sC"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="beerPlaceLogoImage" destination="fEz-IL-4JO" id="1hX-LX-h8G"/>
-                                        <outlet property="beerPlaceName" destination="s1v-a0-Hga" id="Izw-lz-0G2"/>
+                                        <outlet property="beerPlaceImage" destination="fEz-IL-4JO" id="qEd-bQ-UE6"/>
+                                        <outlet property="beerPlaceName" destination="s1v-a0-Hga" id="Cjy-aK-Ji1"/>
                                     </connections>
                                 </collectionViewCell>
                             </cells>
@@ -350,7 +350,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dBA-lS-irF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1IZ-bx-X8S">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1IZ-bx-X8S">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

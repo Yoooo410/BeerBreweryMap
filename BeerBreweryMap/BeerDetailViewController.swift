@@ -98,7 +98,7 @@ class BeerDetailViewController: UIViewController {
 }
 
 
-extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
+extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return myBeers.count
@@ -108,14 +108,28 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
         
         let beer = myBeers[indexPath.row]
+        
+        let doubletapgesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(("processDoubleTap:")))
+        doubletapgesture.numberOfTapsRequired = 1
+        collectionView.addGestureRecognizer(doubletapgesture)
+        
+        
+        
+        
+        
         if let imageName = beer.logoImage {
-            cell.beerPlaceLogoImage.image = UIImage(named: imageName)
+            cell.beerPlaceImage.image = UIImage(named: imageName)
+            
+            // show the beer place image like card view
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = shadowColor?.cgColor
             cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
             cell.layer.shadowOpacity = shadowOpacity
+            cell.isUserInteractionEnabled = true
+            cell.addGestureRecognizer(doubletapgesture)
+            
         } else {
-            cell.beerPlaceLogoImage.image = UIImage(named: "YellowDogBrewingCo")
+            cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
         }
         cell.beerPlaceName.text = beer.name
         
@@ -128,8 +142,43 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         return CGSize(width: width, height: height)
     }
     
-    func tap(_ gestureRecognizer: UITapGestureRecognizer) {
-        beerPlaceLogoImage.alpha = 0.5
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
+//        
+//        cell.beerPlaceImage.isHidden = false
+//        cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
+//        
+//        return cell
+//    }
+    
+    
+    // change background color when user touches cell
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = beerRallyCollectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.red
     }
+    
+    // change background color back when user releases touch
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = beerRallyCollectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.green
+    }
+    
+//    func processDoubleTap (sender: UITapGestureRecognizer)
+//    {
+//        if sender.state == UIGestureRecognizerState.ended
+//        {
+//            let point:CGPoint = sender.location(in: beerRallyCollectionView)
+//            let indexPath:NSIndexPath = beerRallyCollectionView.indexPathForItem(at: point)! as NSIndexPath
+//            if indexPath
+//            {
+//                print("image taped")
+//            }
+//            else
+//            {
+//                //Do Some Other Stuff Here That Isnt Related;
+//            }
+//        }
+//    }
     
 }
