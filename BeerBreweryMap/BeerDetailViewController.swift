@@ -1,3 +1,4 @@
+
 //
 //  BeerDetailViewController.swift
 //  BeerBreweryMap
@@ -7,6 +8,7 @@
 //
 
 import UIKit
+
 
 class BeerDetailViewController: UIViewController {
 
@@ -28,6 +30,7 @@ class BeerDetailViewController: UIViewController {
     var beerSocialMedia: String!
     var beerLogoImage: String!
     var beerDetail: String!
+    var beerIsVisited: Bool!
     var myBeers = [Beer]()
     var isShowView = false
     let shadowOffsetWidth: Int = 0
@@ -41,7 +44,6 @@ class BeerDetailViewController: UIViewController {
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "detailBackgroundPhoto")!)
         self.navigationController?.navigationBar.addSubview(segDetailAndBeerRally)
-        
         
         beerRallyView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: view.frame.width, height: view.frame.height))
         
@@ -108,15 +110,6 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
         
         let beer = myBeers[indexPath.row]
-        
-        let doubletapgesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(("processDoubleTap:")))
-        doubletapgesture.numberOfTapsRequired = 1
-        collectionView.addGestureRecognizer(doubletapgesture)
-        
-        
-        
-        
-        
         if let imageName = beer.logoImage {
             cell.beerPlaceImage.image = UIImage(named: imageName)
             
@@ -126,15 +119,13 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
             cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
             cell.layer.shadowOpacity = shadowOpacity
             cell.isUserInteractionEnabled = true
-            cell.addGestureRecognizer(doubletapgesture)
-            
         } else {
             cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
         }
         cell.beerPlaceName.text = beer.name
-        
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.frame.size.width / 3 - 2
@@ -142,43 +133,27 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         return CGSize(width: width, height: height)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
-//        
-//        cell.beerPlaceImage.isHidden = false
-//        cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
-//        
-//        return cell
-//    }
     
-    
-    // change background color when user touches cell
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = beerRallyCollectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.red
-    }
-    
-    // change background color back when user releases touch
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = beerRallyCollectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.green
-    }
-    
-//    func processDoubleTap (sender: UITapGestureRecognizer)
-//    {
-//        if sender.state == UIGestureRecognizerState.ended
-//        {
-//            let point:CGPoint = sender.location(in: beerRallyCollectionView)
-//            let indexPath:NSIndexPath = beerRallyCollectionView.indexPathForItem(at: point)! as NSIndexPath
-//            if indexPath
-//            {
-//                print("image taped")
+        let alert = UIAlertController(
+            title: "Stamp the place 🍺✨",
+            message: "Do you want to mark the place?", preferredStyle: .alert)
+        print(myBeers[indexPath.row].isVisited)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
+            print(self.beerIsVisited)
+
+        // store in coredata
+//            if self.beerIsVisited == false {
+//                self.beerIsVisited = true
+//                print("Result is ")
+//                print(self.beerIsVisited)
+//                cell?.alpha = 0.2
+//            } else {
+//                print("Error")
 //            }
-//            else
-//            {
-//                //Do Some Other Stuff Here That Isnt Related;
-//            }
-//        }
-//    }
-    
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:nil))
+        present(alert, animated: true, completion: nil)
+    }
 }

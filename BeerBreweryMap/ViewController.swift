@@ -117,7 +117,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     
     // change the address to latitude and longtitude, and stock the array of [CLLocation]
-    func fetchLatLon (for address: String, completion: @escaping (CLLocation) -> Void) {
+    func fetchLatLon(for address: String, completion: @escaping (CLLocation) -> Void) {
         
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(address) { (results, error) in
@@ -211,7 +211,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // set these infomation(name,address,logoimage,distance) to a cell of the BeerPlaceTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BeerPlaceCell", for: indexPath) as! BeerPlaceTableViewCell
-        
         return cell
     }
     
