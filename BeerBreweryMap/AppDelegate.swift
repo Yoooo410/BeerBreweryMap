@@ -14,12 +14,34 @@ import CoreLocation
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var flag: Bool = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        
-        BeerStore.storeBeers()
-
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Beer")
+        let predicate = NSPredicate()
+        request.predicate = predicate
+        request.fetchLimit = 1
+        
+        do{
+            let app = UIApplication.shared.delegate as! AppDelegate
+            let context = app.managedObjectContext
+            let count = try context.count(for: request)
+            if(count == 0){
+                // no matching object
+                BeerStore.storeBeers()
+            }
+            else{
+                // at least one matching object exists
+                print("one matching item found")
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    
         return true
     }
 

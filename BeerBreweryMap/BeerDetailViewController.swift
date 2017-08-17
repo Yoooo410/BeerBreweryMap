@@ -8,7 +8,7 @@
 //
 
 import UIKit
-
+import CoreData
 
 class BeerDetailViewController: UIViewController {
 
@@ -30,9 +30,7 @@ class BeerDetailViewController: UIViewController {
     var beerSocialMedia: String!
     var beerLogoImage: String!
     var beerDetail: String!
-    var beerIsVisited: Bool!
     var myBeers = [Beer]()
-    var isShowView = false
     let shadowOffsetWidth: Int = 0
     let shadowOffsetHeight: Int = 5
     let shadowColor: UIColor? = UIColor.black
@@ -110,19 +108,36 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
         
         let beer = myBeers[indexPath.row]
-        if let imageName = beer.logoImage {
-            cell.beerPlaceImage.image = UIImage(named: imageName)
-            
-            // show the beer place image like card view
-            cell.layer.masksToBounds = false
-            cell.layer.shadowColor = shadowColor?.cgColor
-            cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
-            cell.layer.shadowOpacity = shadowOpacity
-            cell.isUserInteractionEnabled = true
+        if case let beer.isVisited = false {
+            if let imageName = beer.logoImage {
+                cell.beerPlaceImage.image = UIImage(named: imageName)
+
+                // show the beer place image like card view
+                cell.layer.masksToBounds = false
+                cell.layer.shadowColor = shadowColor?.cgColor
+                cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
+                cell.layer.shadowOpacity = shadowOpacity
+                cell.isUserInteractionEnabled = true
+            } else {
+                cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
+            }
+//            cell.beerPlaceName.text = beer.name
         } else {
-            cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
+            if let imageName = beer.logoImage {
+                cell.beerPlaceImage.image = UIImage(named: imageName)
+                
+                // show the beer place image like card view
+                cell.layer.masksToBounds = false
+                cell.layer.shadowColor = shadowColor?.cgColor
+                cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
+                cell.layer.shadowOpacity = shadowOpacity
+                cell.isUserInteractionEnabled = true
+                cell.alpha = 0.2
+            } else {
+                cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
+            }
+
         }
-        cell.beerPlaceName.text = beer.name
         return cell
     }
     
@@ -139,19 +154,20 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let alert = UIAlertController(
             title: "Stamp the place 🍺✨",
             message: "Do you want to mark the place?", preferredStyle: .alert)
-        print(myBeers[indexPath.row].isVisited)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
-            print(self.beerIsVisited)
-
-        // store in coredata
-//            if self.beerIsVisited == false {
-//                self.beerIsVisited = true
-//                print("Result is ")
-//                print(self.beerIsVisited)
-//                cell?.alpha = 0.2
-//            } else {
-//                print("Error")
-//            }
+            print(myBeers[indexPath.row].isVisited)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
+            
+            let beer = self.myBeers[indexPath.row] as NSManagedObject
+            beer.setValue(true, forKey: "isVisited")
+            
+            do {
+                try beer.managedObjectContext?.save()
+                cell?.alpha = 0.2
+                print(self.myBeers[indexPath.row].isVisited)
+            } catch {
+                let saveError = error as NSError
+                print(saveError)
+            }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:nil))
         present(alert, animated: true, completion: nil)

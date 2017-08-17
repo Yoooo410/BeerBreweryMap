@@ -60,6 +60,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             
             self.myBeers = beers
             for beer in self.myBeers {
+                print(beer.isVisited)
                 self.fetchLatLon(for: beer.address!, completion: { (location) in
                     self.addAnnotation(coord: location, beer: beer)
                     
