@@ -15,7 +15,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var beerTableView: UITableView!
-    
     var searchBar: UISearchBar!
     var myBeers = [Beer]()
     var searchResult = [Beer]()
@@ -36,21 +35,20 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        print(paths[0])
         mapView.delegate = self
         beerTableView.delegate = self
         beerTableView.dataSource = self
         setupSearchBar()
         
-        
-        if (CLLocationManager.locationServicesEnabled()) {
+//        if (CLLocationManager.locationServicesEnabled()) {
             locationManager = CLLocationManager()
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
-        }
-        
+//        }
         
         let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
@@ -59,26 +57,22 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             let beers = try viewContext.fetch(fetchRequest) as! [Beer]
             
             self.myBeers = beers
-            for beer in self.myBeers {
-                print(beer.isVisited)
-                self.fetchLatLon(for: beer.address!, completion: { (location) in
-                    self.addAnnotation(coord: location, beer: beer)
-                    
-                    beer.latitude = location.coordinate.latitude
-                    beer.longitude = location.coordinate.longitude
-                    let beerLocation = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
-                    
-                    let currentLocation = CLLocation(latitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!)
-                        
-                    let distanceMeter = beerLocation.distance(from: currentLocation) * 10
-                    beer.distance = round(distanceMeter / 1000) / 10
-                    self.beerTableView.reloadData()
-                })
-            }
             searchResult = myBeers
+            self.beerTableView.reloadData()
         } catch {
             print("Fetching Failed")
         }
+    }
+    func setDistanceFromCurrentLocation(beer: Beer, completion:@escaping (Void)->Void) {
+        
+        let beerLocation = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
+        if let currentloc = self.locationManager.location {
+            let currentLocation = CLLocation(latitude: currentloc.coordinate.latitude, longitude: currentloc.coordinate.longitude)
+            let distanceMeter = beerLocation.distance(from: currentLocation) * 10
+            beer.distance = round(distanceMeter / 1000) / 10
+        }
+        completion()
+        
     }
     
     // right before locating User on the mapview
@@ -90,7 +84,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             
             let center = CLLocationCoordinate2D(latitude:lat!, longitude: lon!)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-            
+            for beer in self.myBeers {
+                let coord = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
+                self.addAnnotation(coord: coord, beer: beer)
+                self.setDistanceFromCurrentLocation(beer: beer, completion: {
+                    self.beerTableView.reloadData()
+                })
+                
+            }
             mapView.showsUserLocation = true
             mapView.showsCompass = true
             mapView.showsScale = true
@@ -101,7 +102,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     // set the present user's Location and the region
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        self.beerTableView.reloadData()
     }
 
     
@@ -116,21 +117,21 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         self.mapView.addAnnotation(anno)
     }
     
-    
-    // change the address to latitude and longtitude, and stock the array of [CLLocation]
-    func fetchLatLon(for address: String, completion: @escaping (CLLocation) -> Void) {
-        
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address) { (results, error) in
-            if let location = results?.first?.location {
-                self.coords.append(location)
-                
-                DispatchQueue.main.async {
-                    completion(location)
-                }
-            }
-        }
-    }
+//    
+//    // change the address to latitude and longtitude, and stock the array of [CLLocation]
+//    func fetchLatLon(for address: String, completion: @escaping (CLLocation) -> Void) {
+//        
+//        let geocoder = CLGeocoder()
+//        geocoder.geocodeAddressString(address) { (results, error) in
+//            if let location = results?.first?.location {
+//                self.coords.append(location)
+//                
+//                DispatchQueue.main.async {
+//                    completion(location)
+//                }
+//            }
+//        }
+//    }
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -245,7 +246,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         beerSocialMedia = searchResult[indexPath.row].socialMedia!
         beerLogoImage = searchResult[indexPath.row].logoImage!
         beerDetail = searchResult[indexPath.row].detail!
-    
         performSegue(withIdentifier: "showBeerDetail", sender: nil)
     }
     

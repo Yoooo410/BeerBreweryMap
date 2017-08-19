@@ -18,16 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-       
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Beer")
-        let predicate = NSPredicate()
-        request.predicate = predicate
         request.fetchLimit = 1
         
         do{
-            let app = UIApplication.shared.delegate as! AppDelegate
-            let context = app.managedObjectContext
+            let context = persistentContainer.viewContext
             let count = try context.count(for: request)
             if(count == 0){
                 // no matching object
@@ -41,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-    
         return true
     }
 

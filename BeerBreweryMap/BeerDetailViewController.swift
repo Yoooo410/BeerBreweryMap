@@ -108,7 +108,7 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         let cell = beerRallyCollectionView.dequeueReusableCell(withReuseIdentifier: "beerPlaceLogoImage", for: indexPath) as! BeerRallyCellCollectionViewCell
         
         let beer = myBeers[indexPath.row]
-        if case let beer.isVisited = false {
+        if case beer.isVisited = false {
             if let imageName = beer.logoImage {
                 cell.beerPlaceImage.image = UIImage(named: imageName)
 
@@ -152,9 +152,8 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = beerRallyCollectionView.cellForItem(at: indexPath)
         let alert = UIAlertController(
-            title: "Stamp the place 🍺✨",
-            message: "Do you want to mark the place?", preferredStyle: .alert)
-            print(myBeers[indexPath.row].isVisited)
+            title: myBeers[indexPath.row].name! + "🍺",
+            message: "Do you want to stamp the place?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
             
             let beer = self.myBeers[indexPath.row] as NSManagedObject
