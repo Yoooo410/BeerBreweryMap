@@ -163,6 +163,8 @@ struct BeerStore {
         brewery11.id = 11
         brewery11.name = "Canuck Empire Brewing"
         brewery11.address = "Sorry for any inconvenience Aldergrove, British Columbia No tasting room or growler fills"
+        brewery11.latitude = 49.062180
+        brewery11.longitude = -122.275268
         brewery11.phoneNumber = "N/A"
         brewery11.website = "canuckempirebrewing.com"
         brewery11.socialMedia = "facebook.com/CanuckEmpire"
@@ -1021,6 +1023,8 @@ struct BeerStore {
         brewery62.id = 62
         brewery62.name = "Yellow Dog Brewing Co."
         brewery62.address = "1–2817 Murray St, Port Moody"
+        brewery62.latitude = 49.278526
+        brewery62.longitude = -122.848693
         brewery62.phoneNumber = "604-492-0191"
         brewery62.website = "yellowdogbeer.com"
         brewery62.socialMedia = "facebook.com/YellowDogBeer"

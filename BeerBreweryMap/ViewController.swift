@@ -11,22 +11,19 @@ import MapKit
 import CoreData
 import CoreLocation
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var beerTableView: UITableView!
+    
     var searchBar: UISearchBar!
     var myBeers = [Beer]()
     var searchResult = [Beer]()
-    var coords = [CLLocation]()
-    var locationManager: CLLocationManager!
-    var beerName: String = ""
-    var beerAddress: String = ""
-    var beerPhoneNumber: String = ""
-    var beerWebsite: String = ""
-    var beerSocialMedia: String = ""
-    var beerLogoImage: String = ""
-    var beerDetail: String = ""
+
+    var locationManager: CLLocationManager?
+    var startLocation: CLLocation?
+    
+    var beer: Beer?
     let shadowOffsetWidth: Int = 1
     let shadowOffsetHeight: Int = 2
     let shadowColor: UIColor? = UIColor.black
@@ -35,76 +32,75 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        print(paths[0])
+        
         mapView.delegate = self
         beerTableView.delegate = self
         beerTableView.dataSource = self
         setupSearchBar()
+
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestAlwaysAuthorization()
+
         
-//        if (CLLocationManager.locationServicesEnabled()) {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-//        }
         
+    }
+    
+    func setDistanceFromCurrentLocation(beer: Beer) {
+        
+        let beerLocation = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
+        
+        if let currentloc = startLocation {
+            let distanceMeter = beerLocation.distance(from: currentloc) * 10
+            beer.distance = round(distanceMeter / 1000) / 10
+        }
+    }
+    
+    func setup() {
         let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
         
         do {
             let beers = try viewContext.fetch(fetchRequest) as! [Beer]
-            
             self.myBeers = beers
             searchResult = myBeers
-            self.beerTableView.reloadData()
+            
+            for beer in self.myBeers {
+                let coord = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
+                self.addAnnotation(coord: coord, beer: beer)
+                self.setDistanceFromCurrentLocation(beer: beer)
+            }
         } catch {
             print("Fetching Failed")
         }
     }
-    func setDistanceFromCurrentLocation(beer: Beer, completion:@escaping (Void)->Void) {
-        
-        let beerLocation = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
-        if let currentloc = self.locationManager.location {
-            let currentLocation = CLLocation(latitude: currentloc.coordinate.latitude, longitude: currentloc.coordinate.longitude)
-            let distanceMeter = beerLocation.distance(from: currentLocation) * 10
-            beer.distance = round(distanceMeter / 1000) / 10
-        }
-        completion()
-        
-    }
-    
-    // right before locating User on the mapview
-    func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-        
-        if locationManager.location != nil {
-            let lat = locationManager.location?.coordinate.latitude
-            let lon = locationManager.location?.coordinate.longitude
-            
-            let center = CLLocationCoordinate2D(latitude:lat!, longitude: lon!)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-            for beer in self.myBeers {
-                let coord = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
-                self.addAnnotation(coord: coord, beer: beer)
-                self.setDistanceFromCurrentLocation(beer: beer, completion: {
-                    self.beerTableView.reloadData()
-                })
-                
-            }
-            mapView.showsUserLocation = true
-            mapView.showsCompass = true
-            mapView.showsScale = true
-            mapView.showsTraffic = true
-            self.mapView.setRegion(region, animated: true)
-        }
-    }
-    
-    // set the present user's Location and the region
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.beerTableView.reloadData()
-    }
+}
 
+
+
+// MARK: MKMapViewDelegate
+extension ViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("selected")
+    }
+    
+    
+    // set the pin of each beer object's address to mapView
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation, beer: Beer) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation { return nil }
+        let pinIdent = "Pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent)
+        } else {
+            pinView?.annotation = annotation
+        }
+        return pinView
+    }
     
     // add the annotation to the map view
     func addAnnotation(coord: CLLocation, beer: Beer){
@@ -116,47 +112,48 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         anno.subtitle = beer.address
         self.mapView.addAnnotation(anno)
     }
-    
-//    
-//    // change the address to latitude and longtitude, and stock the array of [CLLocation]
-//    func fetchLatLon(for address: String, completion: @escaping (CLLocation) -> Void) {
-//        
-//        let geocoder = CLGeocoder()
-//        geocoder.geocodeAddressString(address) { (results, error) in
-//            if let location = results?.first?.location {
-//                self.coords.append(location)
-//                
-//                DispatchQueue.main.async {
-//                    completion(location)
-//                }
-//            }
-//        }
-//    }
-    
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("selected")
+}
+
+
+
+// MARK: CLLocationManagerDelegate
+extension ViewController: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
     
-    
-    // set the pin of each beer object's address to mapView
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation, beer: Beer) -> MKAnnotationView? {
-
-        if annotation is MKUserLocation { return nil }
-        let pinIdent = "Pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView
-    
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent)
-        } else {
-            pinView?.annotation = annotation
+    // set the present user's Location and the region
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if startLocation == nil {
+            startLocation = locations.first
+            setup()
+            let lat = locationManager?.location?.coordinate.latitude
+            let lon = locationManager?.location?.coordinate.longitude
+            
+            let center = CLLocationCoordinate2D(latitude:lat!, longitude: lon!)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+            
+            mapView.showsUserLocation = true
+            mapView.showsCompass = true
+            mapView.showsScale = true
+            mapView.showsTraffic = true
+            self.mapView.setRegion(region, animated: true)
+            self.beerTableView.reloadData()
         }
-        return pinView
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager?.startUpdatingLocation()
+        }
     }
 }
 
 
 
+// MARK: UISearchBarDelegate
 extension ViewController: UISearchBarDelegate {
     
     // set the search bar on the Navigation bar
@@ -194,6 +191,8 @@ extension ViewController: UISearchBarDelegate {
         // reload the BeerPlaceTableView
         beerTableView.reloadData()
     }
+    
+    
     // close the keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
@@ -202,6 +201,7 @@ extension ViewController: UISearchBarDelegate {
 
 
 
+// MARK: UITableViewDelegate
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // set the number of the cell
@@ -216,7 +216,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // set the information in the table view after searching
+    // set the information in the tableview after searching
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let beer = searchResult[indexPath.row]
         let cell = cell as! BeerPlaceTableViewCell
@@ -235,34 +235,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.beerPlaceAddress.text = beer.address!
         cell.destance.text = String(beer.distance)
     }
-    
-    
-    // pass the data of these properties to detail page when select the cell of the BeerPlaceTableView
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        beerName = searchResult[indexPath.row].name!
-        beerAddress = searchResult[indexPath.row].address!
-        beerPhoneNumber = searchResult[indexPath.row].phoneNumber!
-        beerWebsite = searchResult[indexPath.row].website!
-        beerSocialMedia = searchResult[indexPath.row].socialMedia!
-        beerLogoImage = searchResult[indexPath.row].logoImage!
-        beerDetail = searchResult[indexPath.row].detail!
-        performSegue(withIdentifier: "showBeerDetail", sender: nil)
-    }
-    
+
     
     // define the segu which sent the information to the BeerDetailViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "showBeerDetail") {
-            let beerDetailVC: BeerDetailViewController = (segue.destination as? BeerDetailViewController)!
-
-            beerDetailVC.myBeers = myBeers
-            beerDetailVC.beerName = beerName
-            beerDetailVC.beerAddress = beerAddress
-            beerDetailVC.beerPhoneNumber = beerPhoneNumber
-            beerDetailVC.beerWebsite = beerWebsite
-            beerDetailVC.beerSocialMedia = beerSocialMedia
-            beerDetailVC.beerLogoImage = beerLogoImage
-            beerDetailVC.beerDetail = beerDetail
+        if segue.identifier == "showBeerDetail", let destination = segue.destination as? BeerDetailViewController {
+            if let cell = sender as? BeerPlaceTableViewCell, let indexPath = beerTableView.indexPath(for: cell) {
+                let beer = searchResult[indexPath.row]
+                destination.beer = beer
+                destination.myBeers = myBeers
+            }
         }
     }
 }

@@ -23,13 +23,7 @@ class BeerDetailViewController: UIViewController {
     @IBOutlet weak var segDetailAndBeerRally: UISegmentedControl!
     @IBOutlet var beerRallyView: UIView!
     
-    var beerName: String!
-    var beerAddress: String!
-    var beerPhoneNumber: String!
-    var beerWebsite: String!
-    var beerSocialMedia: String!
-    var beerLogoImage: String!
-    var beerDetail: String!
+    var beer: Beer!
     var myBeers = [Beer]()
     let shadowOffsetWidth: Int = 0
     let shadowOffsetHeight: Int = 5
@@ -48,13 +42,13 @@ class BeerDetailViewController: UIViewController {
         beerRallyCollectionView.dataSource = self
         beerRallyCollectionView.delegate = self
         
-        beerPlaceName.text = beerName
-        beerPlaceAddress.text = beerAddress
-        beerPlacePhoneNumber.text = beerPhoneNumber
-        beerPlaceWebsite.text = beerWebsite
-        beerPlaceSocialMedia.text = beerSocialMedia
-        beerPlaceLogoImage.image = UIImage(named: beerLogoImage)
-        beerPlaceDetail.text = beerDetail
+        beerPlaceName.text = beer.name
+        beerPlaceAddress.text = beer.address
+        beerPlacePhoneNumber.text = beer.phoneNumber
+        beerPlaceWebsite.text = beer.website
+        beerPlaceSocialMedia.text = beer.socialMedia
+        beerPlaceLogoImage.image = UIImage(named: beer.logoImage!)
+        beerPlaceDetail.text = beer.detail
     }
     
     
@@ -98,6 +92,8 @@ class BeerDetailViewController: UIViewController {
 }
 
 
+
+// MARK: UICollectionViewDelegate
 extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,7 +117,6 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
             } else {
                 cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
             }
-//            cell.beerPlaceName.text = beer.name
         } else {
             if let imageName = beer.logoImage {
                 cell.beerPlaceImage.image = UIImage(named: imageName)
@@ -136,7 +131,6 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
             } else {
                 cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
             }
-
         }
         return cell
     }
