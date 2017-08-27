@@ -13,7 +13,7 @@ class BeerPlaceTableViewCell: UITableViewCell {
     @IBOutlet weak var beerImageView: UIImageView!
     @IBOutlet weak var beerPlaceName: UILabel!
     @IBOutlet weak var beerPlaceAddress: UILabel!
-    @IBOutlet weak var destance: UILabel!
+    @IBOutlet weak var distance: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

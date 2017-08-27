@@ -107,13 +107,16 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
         if case beer.isVisited = false {
             if let imageName = beer.logoImage {
                 cell.beerPlaceImage.image = UIImage(named: imageName)
+                
 
                 // show the beer place image like card view
                 cell.layer.masksToBounds = false
+                cell.beerPlaceImage.layer.cornerRadius = 45
                 cell.layer.shadowColor = shadowColor?.cgColor
                 cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
                 cell.layer.shadowOpacity = shadowOpacity
                 cell.isUserInteractionEnabled = true
+
             } else {
                 cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")
             }
@@ -127,6 +130,7 @@ extension BeerDetailViewController: UICollectionViewDataSource, UICollectionView
                 cell.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
                 cell.layer.shadowOpacity = shadowOpacity
                 cell.isUserInteractionEnabled = true
+                cell.beerPlaceImage.layer.cornerRadius = 45
                 cell.alpha = 0.2
             } else {
                 cell.beerPlaceImage.image = UIImage(named: "YellowDogBrewingCo")

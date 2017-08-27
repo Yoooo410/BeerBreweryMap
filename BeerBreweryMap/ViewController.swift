@@ -36,16 +36,15 @@ class ViewController: UIViewController {
         mapView.delegate = self
         beerTableView.delegate = self
         beerTableView.dataSource = self
+        
         setupSearchBar()
 
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestAlwaysAuthorization()
-
-        
-        
     }
+
     
     func setDistanceFromCurrentLocation(beer: Beer) {
         
@@ -213,6 +212,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // set these infomation(name,address,logoimage,distance) to a cell of the BeerPlaceTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BeerPlaceCell", for: indexPath) as! BeerPlaceTableViewCell
+        
         return cell
     }
     
@@ -233,7 +233,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.accessoryType = .disclosureIndicator
         cell.beerPlaceName.text = beer.name!
         cell.beerPlaceAddress.text = beer.address!
-        cell.destance.text = String(beer.distance)
+        cell.distance.text = String(beer.distance)
+        print(beer.distance)
     }
 
     
