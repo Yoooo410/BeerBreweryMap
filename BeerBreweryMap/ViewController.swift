@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  BeerBreweryMap
@@ -15,21 +16,21 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var beerTableView: UITableView!
+    @IBOutlet weak var constraintOfMkmapHeight: NSLayoutConstraint!
     
     var searchBar: UISearchBar!
     var myBeers = [Beer]()
     var searchResult = [Beer]()
-
+    var beer: Beer?
+    
     var locationManager: CLLocationManager?
     var startLocation: CLLocation?
     
-    var beer: Beer?
     let shadowOffsetWidth: Int = 1
     let shadowOffsetHeight: Int = 2
     let shadowColor: UIColor? = UIColor.black
     let shadowOpacity: Float = 0.5
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,9 +43,8 @@ class ViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestAlwaysAuthorization()
+        locationManager?.requestWhenInUseAuthorization()        
     }
-
     
     func setDistanceFromCurrentLocation(beer: Beer) {
         
@@ -63,13 +63,14 @@ class ViewController: UIViewController {
         do {
             let beers = try viewContext.fetch(fetchRequest) as! [Beer]
             self.myBeers = beers
-            searchResult = myBeers
+            self.searchResult = self.myBeers
             
             for beer in self.myBeers {
                 let coord = CLLocation(latitude: beer.latitude, longitude: beer.longitude)
                 self.addAnnotation(coord: coord, beer: beer)
                 self.setDistanceFromCurrentLocation(beer: beer)
             }
+            self.searchResult = self.searchResult.sorted(by: {$0.distance < $1.distance})
         } catch {
             print("Fetching Failed")
         }
@@ -78,11 +79,14 @@ class ViewController: UIViewController {
 
 
 
-// MARK: MKMapViewDelegate
+// MARK: MKMapView Delegate
 extension ViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("selected")
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "beerDetailVC") as! BeerDetailViewController
+        self.present(nextViewController, animated: true, completion: nil)
     }
     
     
@@ -115,7 +119,7 @@ extension ViewController: MKMapViewDelegate {
 
 
 
-// MARK: CLLocationManagerDelegate
+// MARK: CLLocationManager Delegate
 extension ViewController: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -167,7 +171,6 @@ extension ViewController: UISearchBarDelegate {
             navigationItem.titleView = searchBar
             navigationItem.titleView?.frame = searchBar.frame
             self.searchBar = searchBar
-            searchBar.becomeFirstResponder()
         }
     }
     
@@ -187,13 +190,28 @@ extension ViewController: UISearchBarDelegate {
                 }
             }
         }
+        searchResult = searchResult.sorted(by: {$0.distance < $1.distance})
+        constraintOfMkmapHeight.constant = 0
         // reload the BeerPlaceTableView
         beerTableView.reloadData()
     }
-    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        constraintOfMkmapHeight.constant = 0
+        searchBar.showsCancelButton = true
+    }
     
     // close the keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchResult = myBeers
+        searchResult = searchResult.sorted(by: {$0.distance < $1.distance})
+        constraintOfMkmapHeight.constant = 350
+        beerTableView.reloadData()
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
         searchBar.endEditing(true)
     }
 }
@@ -207,7 +225,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResult.count
     }
-    
     
     // set these infomation(name,address,logoimage,distance) to a cell of the BeerPlaceTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -234,7 +251,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.beerPlaceName.text = beer.name!
         cell.beerPlaceAddress.text = beer.address!
         cell.distance.text = String(beer.distance)
-        print(beer.distance)
     }
 
     

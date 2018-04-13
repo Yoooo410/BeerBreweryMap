@@ -16,11 +16,10 @@ class BeerDetailViewController: UIViewController {
     @IBOutlet weak var beerPlaceLogoImage: UIImageView!
     @IBOutlet weak var beerPlaceName: UILabel!
     @IBOutlet weak var beerPlaceAddress: UILabel!
-    @IBOutlet weak var beerPlacePhoneNumber: UILabel!
+    @IBOutlet weak var beerPlacePhoneNumber: UITextView!
     @IBOutlet weak var beerPlaceSocialMedia: UITextView!
     @IBOutlet weak var beerPlaceWebsite: UITextView!
     @IBOutlet weak var beerPlaceDetail: UITextView!
-    @IBOutlet weak var segDetailAndBeerRally: UISegmentedControl!
     @IBOutlet var beerRallyView: UIView!
     
     var beer: Beer!
@@ -35,7 +34,17 @@ class BeerDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "detailBackgroundPhoto")!)
-        self.navigationController?.navigationBar.addSubview(segDetailAndBeerRally)
+        
+        let segmentTextContent = ["Detail", "Beer Rally"]
+        
+        // Segmented control as the custom title view
+        let segmentedControl = UISegmentedControl(items: segmentTextContent)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.autoresizingMask = .flexibleWidth
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: 180, height: 30)
+        segmentedControl.addTarget(self, action: #selector(changeSeg(_:)), for: .valueChanged)
+        self.navigationItem.titleView = segmentedControl
+
         
         beerRallyView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: view.frame.width, height: view.frame.height))
         
@@ -93,7 +102,7 @@ class BeerDetailViewController: UIViewController {
 
 
 
-// MARK: UICollectionViewDelegate
+// MARK: UICollectionView Delegate
 extension BeerDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
